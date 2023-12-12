@@ -1,5 +1,5 @@
 FROM php:8.1-apache
-LABEL maintainer="YOUR NAME <YOUR EMAIL>"
+LABEL maintainer="Ripley ripley@bbq.ovh"
 
 ARG DEBIAN_FRONTEND=noninteractive
 
