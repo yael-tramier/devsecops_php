@@ -46,7 +46,7 @@ RUN mkdir /opt/sqlite3  \
     && wget https://www.sqlite.org/${SQLITE_YEAR}/sqlite-autoconf-${SQLITE_VERSION}.tar.gz  \
     && tar xvfz sqlite-autoconf-${SQLITE_VERSION}.tar.gz  \
     && cd sqlite-autoconf-${SQLITE_VERSION}  \
-    && ./configure  \
+    && CFLAGS="-DSQLITE_ENABLE_COLUMN_METADATA=1" ./configure  \
     && make -j$(nproc)  \
     && make install  \
     && ln -s /usr/local/bin/sqlite3 /usr/bin/sqlite3 \
