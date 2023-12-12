@@ -55,7 +55,7 @@ RUN mkdir /opt/sqlite3  \
 
 # Install xdebug
 RUN pecl install xdebug-${XDEBUG_VERSION} \
-    && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable xdebug
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
