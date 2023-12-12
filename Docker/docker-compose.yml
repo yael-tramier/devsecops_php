@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  php-apache:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: devsecops_php
+    ports:
+      - "8080:80"
