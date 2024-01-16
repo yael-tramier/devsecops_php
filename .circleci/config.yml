@@ -225,7 +225,32 @@ jobs:
             composer install --optimize-autoloader --no-interaction --prefer-dist
             (flock -w 10 9 || exit 1; sudo -S service php${PHP_FPM_VERSION}-fpm restart ) 9>/tmp/fpm.lock
             EOF
+            
+  metrics-phpmetrics:
+    executor: php-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Install the package as a dev dependency
+          command: |
+            composer require phpmetrics/phpmetrics --dev
+      - run:
+          name: Run PHPMetrics to analyze a folder and generate a report
+          command: |
+            php ./vendor/bin/phpmetrics --report-html=myreport src
 
+  metrics-phploc:
+    executor: php-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Require it as a dev dependency
+          command: |
+            composer require --dev phploc/phploc
+      - run:
+          name: Run it
+          command: |
+            php vendor/bin/phploc
 
 #  deploy-ssh-production:
 # It's up to you :)
