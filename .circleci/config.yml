@@ -252,6 +252,21 @@ jobs:
           command: |
             php phploc.phar --version
             php phploc.phar src
+            
+
+  metrics-blaauw:
+    executor: php-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Require it as a dev dependency
+          command: |
+            composer require --dev niels-de-blaauw/php-doc-check:^0.2.0@dev
+      - run:
+          name: Run it
+          command: |
+            vendor/bin/php-doc-check -?
+            vendor/bin/php-doc-check --exclude vendor src
 
   deploy-ssh-production:
     executor: simple-executor
@@ -318,8 +333,3 @@ workflows:
               only:
                 - master
                 - main
-                - develop
-                - /^feature\/.*/
-                - /^release\/.*/
-                - /^hotfix\/.*/
-                - /^bugfix\/.*/
