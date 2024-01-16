@@ -278,6 +278,12 @@ workflows:
       - test-phpunit:
           requires:
             - build-setup
+      - metrics-phpmetrics:
+          requires:
+            - build-setup
+      - metrics-phploc:
+          requires:
+            - build-setup
       - hold:
           type: approval
           filters:
