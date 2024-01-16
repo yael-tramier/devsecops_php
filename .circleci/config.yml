@@ -169,7 +169,7 @@ jobs:
 
 
   build-docker-image:
-    executor: builder-executor
+    executor: simple-executor
     steps:
       - checkout
       - setup_remote_docker:
