@@ -57,9 +57,9 @@ executors:
         image: cimg/php:8.2
   builder-executor:
     resource_class: small
-    shell: /bin/bash
+    shell: /bin/sh
     docker:
-      - image: cimg/php:8.2-node
+      - image: docker:dind
         name: localhost
   simple-executor:
     resource_class: small
