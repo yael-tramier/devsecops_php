@@ -43,7 +43,7 @@ class ImageCreator
         }
 
         // La police
-        $this->font = 'consolas.ttf';
+        $this->font = '/var/www/html/public/font/consolas.ttf';
     }
 
 

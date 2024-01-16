@@ -40,7 +40,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     wget \
     apt-utils \
-    apt-transport-https
+    apt-transport-https \
+    vim
 
 # Install sqlite3
 RUN mkdir /opt/sqlite3  \
@@ -91,6 +92,9 @@ RUN mkdir -p /var/www/html/vendor \
 
 #Change permission to allow app to work properly
 RUN chown -R www-data:www-data /var/www/html
+
+# Launch composer
+RUN php composer.phar install
 
 # Define the working directory
 WORKDIR /var/www/html
