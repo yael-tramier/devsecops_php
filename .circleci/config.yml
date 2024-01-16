@@ -246,11 +246,12 @@ jobs:
       - run:
           name: Require it as a dev dependency
           command: |
-            composer require --dev phploc/phploc
+            wget https://phar.phpunit.de/phploc.phar
       - run:
           name: Run it
           command: |
-            php vendor/bin/phploc src
+            php phploc.phar --version
+            php phploc.phar src
 
   deploy-ssh-production:
     executor: simple-executor
