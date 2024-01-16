@@ -94,7 +94,7 @@ RUN mkdir -p /var/www/html/vendor \
 RUN chown -R www-data:www-data /var/www/html
 
 # Launch composer
-RUN php composer.phar install
+RUN composer install
 
 # Define the working directory
 WORKDIR /var/www/html
