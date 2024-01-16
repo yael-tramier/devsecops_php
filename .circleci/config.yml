@@ -239,6 +239,7 @@ jobs:
           command: |
             php ./vendor/bin/phpmetrics --report-html=myreport src
 
+
   metrics-phploc:
     executor: php-executor
     steps:
@@ -254,6 +255,19 @@ jobs:
             php phploc.phar src
             
 
+  metrics-phpstan:
+    executor: php-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Require it as a dev dependency
+          command: |
+            composer require --dev phpstan/phpstan
+      - run:
+          name: Run it
+          command: |
+            vendor/bin/phpstan analyse src
+
   metrics-blaauw:
     executor: php-executor
     steps:
@@ -265,8 +279,8 @@ jobs:
       - run:
           name: Run it
           command: |
-            vendor/bin/php-doc-check -?
             vendor/bin/php-doc-check --exclude vendor src
+
 
   deploy-ssh-production:
     executor: simple-executor
@@ -298,6 +312,9 @@ workflows:
           requires:
             - build-setup
       - metrics-phploc:
+          requires:
+            - build-setup
+      - metrics-phpstan:
           requires:
             - build-setup
       - metrics-blaauw:
