@@ -254,18 +254,18 @@ jobs:
             php phploc.phar src
             
 
-  metrics-blaauw:
+  metrics-sonarqube:
     executor: php-executor
     steps:
       - *attach_workspace
       - run:
           name: Require it as a dev dependency
           command: |
-            composer require --dev niels-de-blaauw/php-doc-check:^0.2.0@dev
+            composer require rogervila/php-sonarqube-scanner --dev
       - run:
           name: Run it
           command: |
-            vendor/bin/php-doc-check --exclude vendor ./src
+            vendor/bin/sonar-scanner src
 
   deploy-ssh-production:
     executor: simple-executor
