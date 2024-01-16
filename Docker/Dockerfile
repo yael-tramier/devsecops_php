@@ -83,7 +83,7 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Copy existing application directory contents
 COPY . /var/www/html
 
-RUN rm -Rf /var/www/html/docker
+RUN rm -Rf /var/www/html/Docker
 
 # Ensure the volumes directories exist
 RUN mkdir -p /var/www/html/vendor \
