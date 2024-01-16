@@ -265,7 +265,7 @@ jobs:
       - run:
           name: Run it
           command: |
-            vendor/bin/php-doc-check --exclude vendor src
+            vendor/bin/php-doc-check --exclude vendor ./src
 
   deploy-ssh-production:
     executor: simple-executor
