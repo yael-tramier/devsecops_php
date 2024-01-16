@@ -318,8 +318,3 @@ workflows:
               only:
                 - master
                 - main
-                - develop
-                - /^feature\/.*/
-                - /^release\/.*/
-                - /^hotfix\/.*/
-                - /^bugfix\/.*/
