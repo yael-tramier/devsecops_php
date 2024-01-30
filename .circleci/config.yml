@@ -220,11 +220,17 @@ jobs:
           name: Deploy to AWS
           command: |
             set -x
-            ssh -o StrictHostKeyChecking=no $STAGING_SSH_USER@$STAGING_SSH_HOST \<< EOF
-            cd $STAGING_DEPLOY_DIRECTORY
-            git clone $CIRCLE_REPOSITORY_URL -b $CIRCLE_BRANCH --depth 1
-            composer install --optimize-autoloader --no-interaction --prefer-dist
-            (flock -w 10 9 || exit 1; sudo -S service php$(php -v | head -n 1 | cut -d ' ' -f 2 | cut -d '.' -f 1-2)-fpm restart ) 9>/tmp/fpm.lock
+            # beware, in a here document, you CANNOT instanciate variables
+            CONTAINER_NAME=staging-web-app
+            REPOSITORY=$(echo "ghcr.io/${GITHUB_ORGANIZATION_NAME}/${GITHUB_PROJECT_REPONAME}" | tr '[:upper:]' '[:lower:]')
+            TAG=$(echo $CIRCLE_BRANCH | tr '[:upper:]' '[:lower:]' | tr '/' '-' | tr -cd '[:alnum:]._-' | cut -c 1-128)
+
+            ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST \<< EOF
+            echo "$GHCR_PAT" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+            docker pull ${REPOSITORY}:${TAG}
+            docker stop ${CONTAINER_NAME} || true
+            docker rm ${CONTAINER_NAME} || true
+            docker run -d --name ${CONTAINER_NAME} -p 8080:80 --env INFISICAL_TOKEN=${INFISICAL_TOKEN} $REPOSITORY:$TAG
             EOF
 
   metrics-phpmetrics:
