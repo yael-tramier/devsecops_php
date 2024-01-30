@@ -300,7 +300,7 @@ workflows:
   trivy:
     jobs:
       - trivy/scan:
-          args: 'image python:3.4-alpine'
+          args: 'image devsecops_php'
           
   main_workflow:
     jobs:
