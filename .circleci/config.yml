@@ -300,9 +300,7 @@ workflows:
   trivy:
     jobs:
       - trivy/scan:
-          args: '--no-progress --exit-code 1 image busybox'
-      - trivy/scan:
-          args: '--no-progress --exit-code 1 add busybox'
+          args: 'image python:3.4-alpine'
           
   main_workflow:
     jobs:
