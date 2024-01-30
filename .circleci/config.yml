@@ -301,6 +301,9 @@ workflows:
     jobs:
       - trivy/scan:
           args: '--no-progress --exit-code 1 image busybox'
+      - trivy/scan:
+          args: '--no-progress --exit-code 1 add busybox'
+          
   main_workflow:
     jobs:
       - debug-info
