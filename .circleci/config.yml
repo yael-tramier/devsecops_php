@@ -300,7 +300,7 @@ workflows:
   trivy:
     jobs:
       - trivy/scan:
-          args: 'image devsecops_php'
+          args: 'image ghcr.io/yael-tramier/devsecopsphp:master'
           
   main_workflow:
     jobs:
