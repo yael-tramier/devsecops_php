@@ -233,7 +233,7 @@ jobs:
             docker pull ${REPOSITORY}:${TAG}
             docker stop ${CONTAINER_NAME} || true
             docker rm ${CONTAINER_NAME} || true
-            docker run -d --name ${CONTAINER_NAME} -p 8080:80 --env INFISICAL_TOKEN=${INFISICAL_TOKEN} $REPOSITORY:$TAG
+            docker run -d --name ${CONTAINER_NAME} -p 80:80 --env INFISICAL_TOKEN=${INFISICAL_TOKEN} $REPOSITORY:$TAG
             EOF
 
   metrics-phpmetrics:
