@@ -224,13 +224,12 @@ jobs:
           command: |
             set -x
             ssh -o StrictHostKeyChecking=no $STAGING_SSH_USER@$STAGING_SSH_HOST \<< EOF
-            PHP_FPM_VERSION=$(php -v | head -n 1 | cut -d ' ' -f 2 | cut -d '.' -f 1-2)
             cd $STAGING_DEPLOY_DIRECTORY
-            git pull origin $CIRCLE_BRANCH
+            git clone $CIRCLE_REPOSITORY_URL -b $CIRCLE_BRANCH --depth 1
             composer install --optimize-autoloader --no-interaction --prefer-dist
-            (flock -w 10 9 || exit 1; sudo -S service php${PHP_FPM_VERSION}-fpm restart ) 9>/tmp/fpm.lock
+            (flock -w 10 9 || exit 1; sudo -S service php$(php -v | head -n 1 | cut -d ' ' -f 2 | cut -d '.' -f 1-2)-fpm restart ) 9>/tmp/fpm.lock
             EOF
-            
+
   metrics-phpmetrics:
     executor: php-executor
     steps:
@@ -258,7 +257,7 @@ jobs:
           command: |
             php phploc.phar --version
             php phploc.phar src
-            
+
 
   metrics-phpstan:
     executor: php-executor
