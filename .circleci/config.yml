@@ -68,6 +68,8 @@ executors:
       - image: cimg/base:stable
         name: localhost
 
+orbs:
+  trivy: fifteen5/trivy@1.0.0
 
 
 jobs:
@@ -281,6 +283,10 @@ jobs:
 
 
 workflows:
+  trivy:
+    jobs:
+      - trivy/scan:
+          args: '--no-progress --exit-code 1 image busybox'
   main_workflow:
     jobs:
       - debug-info
