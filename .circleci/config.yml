@@ -102,6 +102,9 @@ jobs:
       - run:
           name: Install dependencies
           command: composer install --no-interaction --no-ansi --prefer-dist
+      - run:
+          name: Login in docker
+          command: echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
       - save_cache:
           paths:
             - ./vendor
@@ -301,6 +304,8 @@ workflows:
     jobs:
       - trivy/scan:
           args: 'image ghcr.io/yael-tramier/devsecopsphp:master'
+          requires:
+            - build-setup
           
   main_workflow:
     jobs:
@@ -313,7 +318,7 @@ workflows:
           requires:
             - build-setup
       - test-phpunit:
-          requires:
+          requires: 
             - build-setup
       - metrics-phpmetrics:
           requires:
