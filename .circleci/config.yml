@@ -301,6 +301,7 @@ jobs:
 workflows:
   trivy:
     jobs:
+      - build-setup
       - trivy/scan:
           args: 'image ghcr.io/yael-tramier/devsecopsphp:master'
           requires:
