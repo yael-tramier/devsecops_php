@@ -69,7 +69,7 @@ executors:
         name: localhost
 
 orbs:
-  trivy: fifteen5/trivy@1.0.0
+  trivy: fifteen5/trivy-orb@1.0.0
 
 
 jobs:
