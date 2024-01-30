@@ -21,7 +21,8 @@ class ImageCreator
     protected string $text2;
     protected string $font;
 
-
+    /**
+    */
     public function __construct(
         array  $yourColor = [128, 128, 128],
         array  $yourColor2 = [60, 80, 57],
@@ -47,12 +48,24 @@ class ImageCreator
     }
 
 
+    /**
+     * Allocate Color
+     *
+     * Allocates a color in the image resource based on the given RGB values.
+     *
+     * @param array $rgb An array representing the RGB values for the color.
+     *
+     * @return false|int Returns the allocated color identifier on success, or false on failure.
+     */
     private function allocateColor(array $rgb): false|int
     {
+        // Uses the GD library function imagecolorallocate to allocate a color in the image.
+        // The spread operator (...) is used to unpack the RGB array into individual arguments.
         return imagecolorallocate($this->im, ...$rgb);
     }
 
-
+    /**
+    */
     public function createImage(): void
     {
         // Dessine un double rectangle
