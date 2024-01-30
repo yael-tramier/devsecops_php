@@ -298,20 +298,17 @@ jobs:
             ls -l
 
 #launch job
-workflows:
-  trivy:
-    jobs:
-      - build-setup
-      - trivy/scan:
-          args: 'image ghcr.io/yael-tramier/devsecopsphp:master'
-          requires:
-            - build-setup
+workflows:     
           
   main_workflow:
     jobs:
       - debug-info
       - build-setup
       - lint-phpcs:
+          requires:
+            - build-setup
+      - trivy/scan:
+          args: 'image ghcr.io/yael-tramier/devsecopsphp:master'
           requires:
             - build-setup
       - security-check-dependencies:
